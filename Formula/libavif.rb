@@ -6,6 +6,7 @@ class Libavif < Formula
 
   depends_on "cmake" => :build
   depends_on "aom"
+  depends_on "dav1d"
   depends_on "svt-av1"
   depends_on "jpeg-turbo"
   depends_on "libpng"
@@ -17,17 +18,21 @@ class Libavif < Formula
   end
 
   def install
-    (buildpath/"ext/libargparse").mkpath
-    resource("libargparse").stage(buildpath/"ext/libargparse")
+    resource("libargparse").unpack(buildpath/"ext/libargparse")
 
-    system "cmake", "-S", ".", "-B", "build",
-      "-DAVIF_CODEC_AOM=ON",
-      "-DAVIF_CODEC_SVT=ON",
-      "-DAVIF_BUILD_APPS=ON",
-      "-DAVIF_BUILD_TESTS=OFF",
-      "-DAVIF_LIBYUV=ON",
-      "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
-      *std_cmake_args
+    args = %W[
+      -DCMAKE_INSTALL_RPATH=#{rpath}
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+      -DAVIF_CODEC_AOM=SYSTEM
+      -DAVIF_CODEC_DAV1D=SYSTEM
+      -DAVIF_CODEC_SVT=SYSTEM
+      -DAVIF_BUILD_APPS=ON
+      -DAVIF_BUILD_EXAMPLES=OFF
+      -DAVIF_BUILD_TESTS=OFF
+      -DAVIF_LIBYUV=SYSTEM
+    ]
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end
