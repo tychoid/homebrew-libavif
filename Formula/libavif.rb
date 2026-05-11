@@ -8,18 +8,19 @@ class Libavif < Formula
   depends_on "aom"
   depends_on "svt-av1"
   depends_on "jpeg-turbo"
+  depends_on "libpng"
 
   def install
     args = %W[
-      -DAVIF_CODEC_AOM=LOCAL
-      -DAVIF_CODEC_DAV1D=LOCAL
-      -DAVIF_CODEC_LIBGAV1=LOCAL
-      -DAVIF_CODEC_RAV1E=LOCAL
-      -DAVIF_CODEC_SVT=LOCAL
-      -DAVIF_JPEG=LOCAL
+      -DAVIF_CODEC_AOM=SYSTEM
+      -DAVIF_CODEC_DAV1D=ON
+      -DAVIF_CODEC_LIBGAV1=ON
+      -DAVIF_CODEC_RAV1E=ON
+      -DAVIF_CODEC_SVT=ON
       -DAVIF_LIBYUV=LOCAL
-      -DAVIF_ZLIBPNG=LOCAL
       -DAVIF_BUILD_APPS=ON
+      -DAVIF_BUILD_TESTS=OFF
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5
       
     ]
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
