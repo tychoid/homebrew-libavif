@@ -13,7 +13,6 @@ class Libavif < Formula
   def install
     args = %W[
       -DAVIF_CODEC_AOM=SYSTEM
-      -DAVIF_CODEC_DAV1D=ON
       -DAVIF_CODEC_SVT=ON
       -DAVIF_LIBYUV=LOCAL
       -DAVIF_BUILD_APPS=ON
