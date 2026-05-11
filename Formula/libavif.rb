@@ -6,6 +6,7 @@ class Libavif < Formula
 
   depends_on "cmake" => :build
   depends_on "aom"
+  depends_on "dav1d"
   depends_on "svt-av1"
   depends_on "jpeg-turbo"
   depends_on "libpng"
@@ -14,6 +15,7 @@ class Libavif < Formula
   def install
     args = %W[
       -DAVIF_CODEC_AOM=SYSTEM
+      -DAVIF_CODEC_DAV1D=ON
       -DAVIF_CODEC_SVT=ON
       -DAVIF_LIBYUV=ON
       -DAVIF_BUILD_APPS=ON
