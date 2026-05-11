@@ -8,10 +8,12 @@ class Libyuv < Formula
   depends_on "cmake" => :build
 
   def install
+    ENV.append "CXXFLAGS", "-mno-i8mm"
+    ENV.append "CFLAGS", "-mno-i8mm"
+
     system "cmake", "-S", ".", "-B", "build",
-      "-DCMAKE_CXX_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME -mno-i8mm -mno-dotprod",
-      "-DCMAKE_C_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME -mno-i8mm -mno-dotprod",
-      "-DCMAKE_OSX_ARCHITECTURES=arm64",
+      "-DCMAKE_CXX_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME",
+      "-DCMAKE_C_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME",
       *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
