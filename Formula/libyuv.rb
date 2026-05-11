@@ -14,6 +14,7 @@ class Libyuv < Formula
     system "cmake", "-S", ".", "-B", "build",
       "-DCMAKE_CXX_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME",
       "-DCMAKE_C_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME",
+      "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
       *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
