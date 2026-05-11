@@ -9,8 +9,7 @@ class Libyuv < Formula
 
   def install
     system "cmake", "-S", ".", "-B", "build",
-      "-DCMAKE_CXX_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME -DLIBYUV_DISABLE_I8MM",
-      "-DCMAKE_C_FLAGS=-DLIBYUV_DISABLE_SVE -DLIBYUV_DISABLE_SME -DLIBYUV_DISABLE_I8MM",
+      "-DCMAKE_OSX_ARCHITECTURES=arm64",
       *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
