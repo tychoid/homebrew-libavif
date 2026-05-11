@@ -6,24 +6,28 @@ class Libavif < Formula
 
   depends_on "cmake" => :build
   depends_on "aom"
-  depends_on "dav1d"
   depends_on "svt-av1"
   depends_on "jpeg-turbo"
   depends_on "libpng"
   depends_on "tychoid/libavif/libyuv"
 
+  resource "libargparse" do
+    url "https://github.com/kmurray/libargparse/archive/ee74d1b53bd680748af14e737378de57e2a0a954.tar.gz"
+    sha256 "7727b0498851e5b6a6fcd734eb667a8a231897e2c86a357aec51cc0664813060"
+  end
+
   def install
-    args = %W[
-      -DAVIF_CODEC_AOM=SYSTEM
-      -DAVIF_CODEC_DAV1D=ON
-      -DAVIF_CODEC_SVT=ON
-      -DAVIF_LIBYUV=ON
-      -DAVIF_BUILD_APPS=ON
-      -DAVIF_BUILD_TESTS=OFF
-      -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-      
-    ]
-    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    (buildpath/"ext/libargparse").mkpath
+    resource("libargparse").stage(buildpath/"ext/libargparse")
+
+    system "cmake", "-S", ".", "-B", "build",
+      "-DAVIF_CODEC_AOM=ON",
+      "-DAVIF_CODEC_SVT=ON",
+      "-DAVIF_BUILD_APPS=ON",
+      "-DAVIF_BUILD_TESTS=OFF",
+      "-DAVIF_LIBYUV=ON",
+      "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+      *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end
