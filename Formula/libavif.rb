@@ -9,6 +9,7 @@ class Libavif < Formula
   depends_on "svt-av1"
   depends_on "jpeg-turbo"
   depends_on "libpng"
+  depends_on "tychoid/libavif/libyuv"
 
   def install
     args = %W[
