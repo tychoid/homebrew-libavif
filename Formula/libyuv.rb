@@ -2,8 +2,8 @@ class Libyuv < Formula
   desc "Library for YUV scaling and conversion"
   homepage "https://chromium.googlesource.com/libyuv/libyuv"
   url "https://chromium.googlesource.com/libyuv/libyuv.git",
-      revision: "4b4e68b3"
-  version "4b4e68b3"
+      revision: "ace7c457"
+  version "ace7c457"
 
   depends_on "cmake" => :build
 
